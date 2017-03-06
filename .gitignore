@@ -45,3 +45,9 @@ jspm_packages
 
 # Yarn Integrity file
 .yarn-integrity
+
+# Editor config files
+.idea
+.editorconfig
+*.sublime-project
+*.sublime-workspace
