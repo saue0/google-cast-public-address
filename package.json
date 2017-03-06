@@ -1,12 +1,16 @@
 {
   "name": "google-home-notifier",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "",
   "main": "google-home-notifier.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Noel Portugal",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/watusi/google-home-notifier.git"
+    },
+  "author": "Jon Tara, Noel Portugal",
   "keywords": [
     "google home",
     "notifications",
@@ -19,6 +23,7 @@
     "express": "^4.14.0",
     "google-tts-api": "0.0.1",
     "mdns": "^2.3.3",
-    "ngrok": "^2.2.4"
+    "ngrok": "^2.2.4",
+    "convict": "^2.0.0"
   }
 }

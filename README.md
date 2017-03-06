@@ -17,19 +17,31 @@ googlehome.notify('Hey Foo', function(res) {
 ```
 
 #### Listener
-If you want to run a listener, take a look at the example.js file. You can run this from a Raspberry Pi, pc or mac. The example uses ngrok so the server can be reached from outside your network. I tested with ifttt.com Maker channel and it worked like a charm.
+If you want to run a listener, take a look at the google-home-notifier-service.js file. You can run this from a Raspberry Pi, pc or mac. The example uses ngrok so the server can be reached from outside your network. I tested with ifttt.com Maker channel and it worked like a charm.
 
 ```sh
-$ git clone https://github.com/noelportugal/google-home-notifier
+$ git clone https://github.com/watusi/google-home-notifier
 $ cd google-home-notifier
 $ npm install
-$ node example.js
+$ node google-home-notifier-service.js
 POST "text=Hello Google Home" to:
-    http://localhost:8080/google-home-notifier
+    http://127.0.0.1:8080/google-home-notifier
     https://xxxxx.ngrok.io/google-home-notifier
 example:
 curl -X POST -d "text=Hello Google Home" https://xxxxx.ngrok.io/google-home-notifier
 ```
+
+#### Configuration
+Configuration is normally read from ./config/config.json. You can also provide environment-specific overrides in ./config/production.json, ./config/development.json, or ./config/test.json. Configuration items can also be overridden from command-line or environment variables.
+
+See https://github.com/mozilla/node-convict for details on overriding configuration items.
+
+| key | description |
+ ---------- | ----------------------------------------
+ip | IP address to bind, defaults to 127.0.0.1
+port | port to bind, defaults to 8080
+
+
 #### Raspberry Pi
 If you are running from Raspberry Pi make sure you have the following before nunning "npm install":
 Use the latest nodejs dist.
@@ -42,7 +54,7 @@ Also install these packages:
 sudo apt-get install git-core libnss-mdns libavahi-compat-libdnssd-dev
 ```
 
-## After "npm install"
+## After "npm install" (only needed if host OS does not support IPV6)
 
 Modify the following file "node_modules/mdns/lib/browser.js"
 ```sh

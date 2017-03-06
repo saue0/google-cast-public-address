@@ -3,7 +3,10 @@ var googlehome = require('./google-home-notifier');
 var ngrok = require('ngrok');
 var bodyParser = require('body-parser');
 var app = express();
-const serverPort = 8080;
+var conf = require('./config.js');
+
+const serverPort = conf.get('port');
+const serverIP = conf.get('ip');
 
 var deviceName = 'Google Home';
 googlehome.device(deviceName);
@@ -25,10 +28,10 @@ app.post('/google-home-notifier', urlencodedParser, function (req, res) {
 
 })
 
-app.listen(serverPort, function () {
+app.listen(serverPort, serverIP, function () {
   ngrok.connect(serverPort, function (err, url) {
     console.log('POST "text=Hello Google Home" to:');
-    console.log('    http://localhost:' + serverPort + '/google-home-notifier');
+    console.log('    http://' + serverIP + ':' + serverPort + '/google-home-notifier');
     console.log('    ' +url + '/google-home-notifier');
     console.log('example:');
     console.log('curl -X POST -d "text=Hello Google Home" ' + url + '/google-home-notifier');
