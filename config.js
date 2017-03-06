@@ -21,6 +21,13 @@ var conf = convict({
     default: 8080,
     env: "PORT",
     arg: "port"
+  },
+  ngrok: {
+    doc: "true to register with ngrok",
+    format: "Boolean",
+    default: false,
+    env: "NGROK",
+    arg: "ngrok"
   }
 });
 
