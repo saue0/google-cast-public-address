@@ -1,40 +1,77 @@
+'use strict';
 var express = require('express');
-var http = require('http');
-var https = require('https');
 var fs = require('fs');
-var ngrok = require('ngrok');
 var bodyParser = require('body-parser');
 var app = express();
 var conf = require('./config.js');
+const useNgrok = conf.get('ngrok');
+if (useNgrok) var ngrok = require('ngrok');
 var ngrokUrl;
 var googlehome = require('./google-home-notifier');
-
 const port = conf.get('port');
 const ip = conf.get('ip');
 const useHttp = port > 0;
+if (useHttp) var http = require('http');
 const sslIp = conf.get('sslIp');
 const sslPort = conf.get('sslPort');
-const localUrl = 'http://' + ip + ':' + port + '/google-home-notifier';
-const localSslUrl = 'https://' + sslIp + ':' + sslPort + '/google-home-notifier';
+const servicePath = 'google-home-notifier';
+const publicPath = conf.get('publicPath');
 const useHttps = sslPort > 0;
-const useNgrok = conf.get('ngrok');
+if (useHttps) var https = require('https');
+const howTo = 'POST "text=Hello Google Home" | "file=path/to/file" | "url=http[s]://example.com/path"';
+const ipZero = '0.0.0.0';
 
 var deviceName = 'Google Home';
 googlehome.device(deviceName);
 
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
+app.use(express.static(publicPath));
+
+// IP address used to fetch (file) media.
+// In case server is bound to multiple addresses, you can specify the address to fetch from
+// If omitted, and bound to multiple addresses, the first bound external address will be used
+// You can actually load media from a completely different server, as well, it saves having to
+// repeat protocol/address/port to do that using url=
+var mediaIp = conf.get('mediaIp');
+var mediaPort = conf.get('mediaPort');
+if (mediaPort < 1) {
+  mediaPort = port;
+}
+const boundAddresses = getBoundAddresses();
+if (mediaIp === ipZero) {
+  mediaIp = boundAddresses.external[0];  // first bound external IPv4 address
+}
+
+const serviceUrl = mkServiceUrl(ip);
+const mediaUrl = `http://${mediaIp}:${mediaPort}/media/`;
+console.log('mediaUrl:', mediaUrl);
+const serviceSslUrl = mkServiceSslUrl(sslIp);
+
 app.post('/google-home-notifier', urlencodedParser, function (req, res) {
-  if (!req.body) return res.sendStatus(400)
+  if (!req.body) return res.sendStatus(400);
   console.log(req.body);
   var text = req.body.text;
-  if (text){
+  var file = req.body.file;
+  var url = req.body.url;
+  if (text) {
     res.send(deviceName + ' will say: ' + text + '\n');
     googlehome.notify(text, function(res) {
       console.log(res);
     });
-  }else{
-    res.send('Please POST "text=Hello Google Home"');
+  } else if (file) {
+    var path = mediaUrl + file;
+    res.send(deviceName + ' will play: ' + path + '\n');
+    googlehome.play(path, function(res) {
+      console.log(res);
+    });
+  } else if (url) {
+    res.send(deviceName + ' will play: ' + url + '\n');
+    googlehome.play(url, function(res) {
+      console.log(res);
+    });
+  } else {
+    res.send('Please ' + howto);
   }
 
 });
@@ -57,7 +94,7 @@ function startHttps() {
       key: fs.readFileSync(conf.get('sslKeyPath')),
       cert: fs.readFileSync(conf.get('sslCertPath')),
       passphrase: conf.get('sslPassphrase')
-      };
+    };
     https.createServer(sslOptions, app).listen(sslPort, sslIp, function() {
       registerNgrok();
     });
@@ -78,19 +115,44 @@ function registerNgrok() {
 }
 
 function usage() {
-  console.log('POST "text=Hello Google Home" to:');
-
+  const addresses = boundAddresses.all.sort();
+  console.log(`${howTo} to:`);
   if (useHttp) {
-    console.log('    ' + localUrl);
+    for (var i in addresses) console.log('    ' + mkServiceUrl(addresses[i]));
   }
-
   if (useHttps) {
-    console.log('    ' + localSslUrl);
+    for (var i in addresses) console.log('    ' + mkServiceSslUrl(addresses[i]));
   }
-
   if (useNgrok) {
-    console.log('    ' + ngrokUrl + '/google-home-notifier');
+    console.log(`    ${ngrokUrl}/google-home-notifier`);
   }
   console.log('example:');
-  console.log('curl -X POST -d "text=Hello Google Home" ' + localUrl + '/google-home-notifier');
+  console.log(`curl -X POST -d "text=Hello Google Home ${mkServiceUrl(boundAddresses.external[0])}/google-home-notifier`);
+}
+
+function getBoundAddresses() {
+  var addresses = {internal:[], external:[], all:[]};
+  const os = require('os');
+  var interfaces = os.networkInterfaces();
+  for (let i in interfaces) {
+    for (let j in interfaces[i]) {
+      let a = interfaces[i][j];
+      if (a.family === 'IPv4') {
+        addresses.all.push(a.address);
+        addresses[a.internal ? 'internal' : 'external'].push(a.address);
+      }
+    }
+  }
+  return addresses;
+}
+
+function mkServiceUrl(ipAddr='0.0.0.0', isSsl=false) {
+  const _port = isSsl ? sslPort : port;
+  const base = `http${isSsl ? 's' : ''}://${ipAddr}:${_port}/`;
+  const url = base + servicePath;
+  return url;
+}
+
+function mkServiceSslUrl(ipAddr) {
+  return mkServiceUrl(ipAddr, true);
 }

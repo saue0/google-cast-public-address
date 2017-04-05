@@ -19,3 +19,8 @@ coverage
 .editorconfig
 *.sublime-project
 *.sublime-workspace
+
+# local configuration files
+production.json
+development.json
+test.json

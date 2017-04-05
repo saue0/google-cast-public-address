@@ -1,0 +1,13 @@
+{
+  "ip": "0.0.0.0",
+  "port": 8080,
+  "mediaIp": "0.0.0.0",
+  "mediaPort": 0,
+  "ngrok": true,
+  "sslIp": "0.0.0.0",
+  "sslPort": 8443,
+  "sslPassphrase": "google-home-notifier",
+  "sslCertPath": "./ssl/default_cert.pem",
+  "sslKeyPath": "./ssl/default_key.pem",
+  "publicPath": "./public"
+}

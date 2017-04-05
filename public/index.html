@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+  <head>
+    <title>
+      google-home-notifier web service
+    </title>
+  </head>
+  <body>
+    <h1>google-home-notifier webservice</h1>
+    <p>A simple web service for playing synthesized speech or media files on Google Home devices.</p>
+    <p>See: https://github.com/watusi/google-home-notifier</p>
+
+    <h2>Demos:</h2>
+
+    <p>Please open this document by accessing the service - not by opening this file directly in your browser.
+    e.g. http://localhost/google-home-notifier</p>
+
+    <p>Although meant primarly for use as a web service, you can play speech or files by submitting a form from a webpage. View the
+    HTML source for details.</p>
+
+    <p>These demos also serve as a simple way to verify that the service is properly installed and running.</p>
+
+
+    <h3>TTS</h3>
+    <form method='POST' action='/google-home-notifier'>
+      <input type='hidden' name='text' value='Hello, Google Home!'>
+      <button type='submit'>Say "Hello, Google Home"</button>
+    </form>
+
+    <h3>Local File</h3>
+    <form method='POST' action='/google-home-notifier'>
+      <input type='hidden' name='file' value='woof-woof-woof.mp3'>
+      <button type='submit'>Play barking dog</button>
+    </form>
+
+    <h3>Remote file/stream</h3>
+    <form method='POST' action='/google-home-notifier'>
+      <input type='hidden' name='url' value='http://kcrw.streamguys1.com/kcrw_192k_mp3_on_air_internet_radio'>
+      <button type='submit'>Play KCRW live stream</button>
+    </form>
+
+    </body>
+</html>
