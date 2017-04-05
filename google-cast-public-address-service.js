@@ -7,7 +7,7 @@ var conf = require('./config.js');
 const useNgrok = conf.get('ngrok');
 if (useNgrok) var ngrok = require('ngrok');
 var ngrokUrl;
-var googlehome = require('./google-cast-public-address');
+var pa = require('./google-cast-public-address');
 const port = conf.get('port');
 const ip = conf.get('ip');
 const useHttp = port > 0;
@@ -22,7 +22,7 @@ const howTo = 'POST "text=Hello Google Cast" | "file=path/to/file" | "url=http[s
 const ipZero = '0.0.0.0';
 
 var deviceName = 'Google Home';
-googlehome.device(deviceName);
+pa.device(deviceName);
 
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
@@ -56,18 +56,18 @@ app.post('/google-cast-public-address', urlencodedParser, function (req, res) {
   var url = req.body.url;
   if (text) {
     res.send(deviceName + ' will say: ' + text + '\n');
-    googlehome.notify(text, function(res) {
+    pa.notify(text, function(res) {
       console.log(res);
     });
   } else if (file) {
     var path = mediaUrl + file;
     res.send(deviceName + ' will play: ' + path + '\n');
-    googlehome.play(path, function(res) {
+    pa.play(path, function(res) {
       console.log(res);
     });
   } else if (url) {
     res.send(deviceName + ' will play: ' + url + '\n');
-    googlehome.play(url, function(res) {
+    pa.play(url, function(res) {
       console.log(res);
     });
   } else {
