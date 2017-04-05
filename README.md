@@ -109,7 +109,7 @@ for `production`, `development`, and `test` environments.
 
 If no configuration file is found, defaults are used. Defaults can be found in `config.js`. You should not normally edit this file!
 
-A sample configuration file is provided in `config/example.js`. It has the same configuration as defaults. You can copy this file to
+A sample configuration file is provided in `config/example.json`. It has the same configuration as defaults. You can copy this file to
 e.g. `config/production.json` and then edit with your local configuration settings.
 
 
