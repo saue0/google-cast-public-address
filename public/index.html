@@ -2,18 +2,18 @@
 <html>
   <head>
     <title>
-      google-home-notifier web service
+      google-cast-public-address web service
     </title>
   </head>
   <body>
-    <h1>google-home-notifier webservice</h1>
-    <p>A simple web service for playing synthesized speech or media files on Google Home devices.</p>
-    <p>See: https://github.com/watusi/google-home-notifier</p>
+    <h1>google-cast-public-address webservice</h1>
+    <p>A simple web service for playing synthesized speech or media files on Google Cast devices.</p>
+    <p>See: https://github.com/watusi/google-cast-public-address</p>
 
     <h2>Demos:</h2>
 
     <p>Please open this document by accessing the service - not by opening this file directly in your browser.
-    e.g. http://localhost/google-home-notifier</p>
+    e.g. http://localhost/google-cast-public-address</p>
 
     <p>Although meant primarly for use as a web service, you can play speech or files by submitting a form from a webpage. View the
     HTML source for details.</p>
@@ -22,19 +22,19 @@
 
 
     <h3>TTS</h3>
-    <form method='POST' action='/google-home-notifier'>
-      <input type='hidden' name='text' value='Hello, Google Home!'>
-      <button type='submit'>Say "Hello, Google Home"</button>
+    <form method='POST' action='/google-cast-public-address'>
+      <input type='hidden' name='text' value='Hello, Google Cast!'>
+      <button type='submit'>Say "Hello, Google Cast"</button>
     </form>
 
     <h3>Local File</h3>
-    <form method='POST' action='/google-home-notifier'>
+    <form method='POST' action='/google-cast-public-address'>
       <input type='hidden' name='file' value='woof-woof-woof.mp3'>
       <button type='submit'>Play barking dog</button>
     </form>
 
     <h3>Remote file/stream</h3>
-    <form method='POST' action='/google-home-notifier'>
+    <form method='POST' action='/google-cast-public-address'>
       <input type='hidden' name='url' value='http://kcrw.streamguys1.com/kcrw_192k_mp3_on_air_internet_radio'>
       <button type='submit'>Play KCRW live stream</button>
     </form>

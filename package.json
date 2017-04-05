@@ -1,20 +1,24 @@
 {
-  "name": "google-home-notifier",
+  "name": "google-cast-public-address",
   "version": "1.1.0",
   "description": "",
-  "main": "google-home-notifier.js",
+  "main": "google-cast-public-address.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/watusi/google-home-notifier.git"
+    "url": "git://github.com/watusi/google-cast-public-address.git"
     },
   "author": "Jon Tara, Noel Portugal",
   "keywords": [
     "google home",
+    "google cast",
     "notifications",
-    "notifier"
+    "notifier",
+    "public address",
+    "TTS",
+    "announcements"
   ],
   "license": "MIT",
   "dependencies": {

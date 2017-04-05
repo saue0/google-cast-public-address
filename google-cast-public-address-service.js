@@ -7,18 +7,18 @@ var conf = require('./config.js');
 const useNgrok = conf.get('ngrok');
 if (useNgrok) var ngrok = require('ngrok');
 var ngrokUrl;
-var googlehome = require('./google-home-notifier');
+var googlehome = require('./google-cast-public-address');
 const port = conf.get('port');
 const ip = conf.get('ip');
 const useHttp = port > 0;
 if (useHttp) var http = require('http');
 const sslIp = conf.get('sslIp');
 const sslPort = conf.get('sslPort');
-const servicePath = 'google-home-notifier';
+const servicePath = 'google-cast-public-address';
 const publicPath = conf.get('publicPath');
 const useHttps = sslPort > 0;
 if (useHttps) var https = require('https');
-const howTo = 'POST "text=Hello Google Home" | "file=path/to/file" | "url=http[s]://example.com/path"';
+const howTo = 'POST "text=Hello Google Cast" | "file=path/to/file" | "url=http[s]://example.com/path"';
 const ipZero = '0.0.0.0';
 
 var deviceName = 'Google Home';
@@ -48,7 +48,7 @@ const mediaUrl = `http://${mediaIp}:${mediaPort}/media/`;
 console.log('mediaUrl:', mediaUrl);
 const serviceSslUrl = mkServiceSslUrl(sslIp);
 
-app.post('/google-home-notifier', urlencodedParser, function (req, res) {
+app.post('/google-cast-public-address', urlencodedParser, function (req, res) {
   if (!req.body) return res.sendStatus(400);
   console.log(req.body);
   var text = req.body.text;
@@ -124,10 +124,10 @@ function usage() {
     for (var i in addresses) console.log('    ' + mkServiceSslUrl(addresses[i]));
   }
   if (useNgrok) {
-    console.log(`    ${ngrokUrl}/google-home-notifier`);
+    console.log(`    ${ngrokUrl}/google-cast-public-address`);
   }
   console.log('example:');
-  console.log(`curl -X POST -d "text=Hello Google Home ${mkServiceUrl(boundAddresses.external[0])}/google-home-notifier`);
+  console.log(`curl -X POST -d "text=Hello Google Cast ${mkServiceUrl(boundAddresses.external[0])}/google-cast-public-address`);
 }
 
 function getBoundAddresses() {
