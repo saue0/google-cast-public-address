@@ -33,8 +33,10 @@ google-cast-public-address-service.js is a simple web service that uses google-c
 (e.g. .mp3 or other supported media) on Google Cast devices. It is very handy for use with home automation controllers, IFTTT,
 etc.
 
-You can run this from a Raspberry Pi, pc or mac. The web service can register with ngrok so the server can be reached
-from outside your network without any router configuration. For example, this can be used with ifttt.com Maker channel.
+You can run this from a Raspberry Pi, pc, Mac, Linux-based router, etc. etc.
+The web service can register with ngrok so the server can be reached
+from outside your network without any router configuration.
+For example, this can be used with ifttt.com Maker channel.
 
 ```sh
 $ git clone https://github.com/watusi/google-cast-public-address
