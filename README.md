@@ -5,7 +5,7 @@ files, or remote (e.g. Internet) audio files on Google Cast devices.
 The package provides a simple API that can be used in your own node.js projects. As well, an optional REST web service
 is provided, which can be useful for initiating announcements or other audio from home automation apps and servers, etc.
 
-This was originally forked from https://github.com/noelportugal/google-cast-public-address
+This was originally forked from https://github.com/noelportugal/google-home-notifier
 
 #### Installation
 
