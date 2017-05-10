@@ -1,5 +1,5 @@
 # google-cast-public-address
-A "public address system" for Google Cast devices. Facilities asynchronous playing of TTS notifications, local audio
+A "public address system" for Google Cast devices. Facilitates asynchronous playing of TTS notifications, local audio
 files, or remote (e.g. Internet) audio files on Google Cast devices.
 
 The package provides a simple API that can be used in your own node.js projects. As well, an optional REST web service
