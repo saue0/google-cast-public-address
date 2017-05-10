@@ -89,7 +89,7 @@ For SSL, you need a certificate. For instructions on creating a self-signed cert
 
   https://aghassi.github.io/ssl-using-express-4/
 
-If your certificate has a passphrase, you can supply it in the configuration (see below). Obviously, this is less than secure, as now you have the certificate passphrase sitting in an unencrypted. As well, you will need to use the cURL --insecure option in order to accept the self-signed certificate when testing. If you are accessing the service from home automation equipment, etc. see if there is an option to accept self-signed certificates.
+If your certificate has a passphrase, you can supply it in the configuration (see below). Obviously, this is less than secure, as now you have the certificate passphrase sitting in an unencrypted file. As well, you will need to use the cURL --insecure option in order to accept the self-signed certificate when testing. If you are accessing the service from home automation equipment, etc. see if there is an option to accept self-signed certificates.
 
 Of course, it is better to use a certificate signed by a certificate authority trusted by browsers and operating systems!
 
