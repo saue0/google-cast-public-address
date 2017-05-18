@@ -127,7 +127,7 @@ function usage() {
     console.log(`    ${ngrokUrl}/google-cast-public-address`);
   }
   console.log('example:');
-  console.log(`curl -X POST -d "text=Hello Google Cast" ${mkServiceUrl(boundAddresses.external[0])}/google-cast-public-address`);
+  console.log(`curl -X POST -d "text=Hello Google Cast" ${mkServiceUrl(boundAddresses.external[0])}`);
 }
 
 function getBoundAddresses() {
