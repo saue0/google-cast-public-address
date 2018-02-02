@@ -22,6 +22,7 @@ const howTo = 'POST "text=Hello Google Cast" | "file=path/to/file" | "url=http[s
 const ipZero = '0.0.0.0';
 
 var deviceName = 'Google Home';
+var lastdeviceName = 'Google Home';
 pa.device(deviceName);
 
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
@@ -54,6 +55,14 @@ app.post('/google-cast-public-address', urlencodedParser, function (req, res) {
   var text = req.body.text;
   var file = req.body.file;
   var url = req.body.url;
+  var currdeviceName = req.body.device || deviceName;
+  var language = req.body.language || 'en';
+  
+  if (lastdeviceName != currdeviceName) {
+    lastdeviceName = currdeviceName;
+    pa.device(lastdeviceName);
+  }
+  
   if (text) {
     res.send(deviceName + ' will say: ' + text + '\n');
     pa.notify(text, function(res) {
