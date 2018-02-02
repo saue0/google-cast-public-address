@@ -7,6 +7,7 @@ var browser = mdns.createBrowser(mdns.tcp('googlecast'));
 var deviceAddress;
 var device = function(name) {
   device = name;
+  deviceAddress = nil;
   return this;
 };
 
